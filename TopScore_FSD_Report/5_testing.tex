@@ -4,28 +4,72 @@ Testing is a critical phase in the software development lifecycle used to identi
 
 \section{Unit Testing}
 Unit testing involves verifying individual components or functions of the application independently. For the Quiz System, unit tests focused on individual controller methods:
-\begin{itemize}
-    \item \textbf{Question Import Logic:} Verified that CSV parsing functions handle valid rows correctly and discard deliberately malformed rows without crashing the application.
-    \item \textbf{Grading Algorithm:} Evaluated the score calculation method by providing mock submissions where some answers were intentionally wrong, ensuring the calculated score matched the expected outcome.
-    \item \textbf{Timer Enforcement:} Tested backend timestamp validation to ensure users could not intercept the clock and extend their allowed answering time maliciously.
-\end{itemize}
+
+\begin{table}[H]
+    \centering
+    \begin{tabular}{|p{4cm}|p{7cm}|l|}
+        \hline
+        \textbf{Test Module} & \textbf{Description \& Expected Result} & \textbf{Status} \\
+        \hline
+        Question Import Logic & Verify CSV parsing functions handle valid rows correctly and discard malformed rows without crashing. & Pass \\
+        \hline
+        Grading Algorithm & Provide mock submissions with intentional errors and verify calculated score matches expected outcome. & Pass \\
+        \hline
+        Timer Enforcement & Test backend timestamp validation ensuring users cannot intercept the clock to maliciously extend time. & Pass \\
+        \hline
+    \end{tabular}
+    \caption{Unit Testing Cases}
+    \label{tab:unit_testing}
+\end{table}
 
 \section{Integration Testing}
 Integration testing evaluates how different modules perform when combined.
-\begin{itemize}
-    \item \textbf{Quiz-to-Questions Linkage:} Evaluated whether creating a Question accurately bound itself to the target Quiz ID and appeared instantly visible to users enrolled via the specific code.
-    \item \textbf{Submission-to-Result Mapping:} Submitted a simulated student response payload and traced the execution from the Controller saving the granular \textit{Student Answers} array to the final generation of the summarized \textit{Result} entry, ensuring foreign key constraints remained intact.
-\end{itemize}
+
+\begin{table}[H]
+    \centering
+    \begin{tabular}{|p{4cm}|p{7cm}|l|}
+        \hline
+        \textbf{Test Module} & \textbf{Description \& Expected Result} & \textbf{Status} \\
+        \hline
+        Quiz-to-Questions & Creating a Question accurately binds to the target Quiz ID and displays instantly for enrolled users. & Pass \\
+        \hline
+        Submission Mapping & Simulate student payload submission ensuring cascade from \textit{Student Answers} array to final \textit{Result} works. & Pass \\
+        \hline
+    \end{tabular}
+    \caption{Integration Testing Cases}
+    \label{tab:integration_testing}
+\end{table}
 
 \section{System Testing}
 System testing is executed on the completely integrated application to evaluate its end-to-end functionality.
-\begin{itemize}
-    \item Tested the complete user timeline: A Teacher registers, builds an entire quiz, accesses the code, logs out. A new Student registers, inputs the code, successfully joins, completes the quiz iteratively, and triggers the grading. Evaluated if the system maintained stability during the simulated session.
-\end{itemize}
+
+\begin{table}[H]
+    \centering
+    \begin{tabular}{|p{4cm}|p{7cm}|l|}
+        \hline
+        \textbf{Test Module} & \textbf{Description \& Expected Result} & \textbf{Status} \\
+        \hline
+        End-to-End Workflow & Teacher registers, creates quiz, code generated. Student registers, joins quiz, takes test, submits. & Pass \\
+        \hline
+    \end{tabular}
+    \caption{System Testing Cases}
+    \label{tab:system_testing}
+\end{table}
 
 \section{User Acceptance Testing (UAT)}
 UAT ensures that the software can handle real-world tasks and meets user expectations. In the context of Top Score:
-\begin{itemize}
-    \item Students verified that the UI timer was accurate, questions loaded quickly, and the interface provided a clear pathway to "Submit."
-    \item Teachers verified that their dashboards displayed all active quizzes correctly, importing bulk CSVs was intuitive, and evaluating student reports effectively highlighted problematic academic areas.
-\end{itemize}
+
+\begin{table}[H]
+    \centering
+    \begin{tabular}{|p{4cm}|p{7cm}|l|}
+        \hline
+        \textbf{User Persona} & \textbf{Description \& Expected Result} & \textbf{Status} \\
+        \hline
+        Student & Interface timer is accurate, questions load instantly, and submission pathways function smoothly. & Pass \\
+        \hline
+        Teacher & Dashboard reflects accurate quizzes, CSV import intuitive, and reports effectively highlight metrics. & Pass \\
+        \hline
+    \end{tabular}
+    \caption{User Acceptance Testing Cases}
+    \label{tab:uat_testing}
+\end{table}

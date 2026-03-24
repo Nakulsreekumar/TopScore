@@ -10,6 +10,35 @@ The host server orchestrates multiple components to ensure smooth application de
     \item \textbf{Environment Context:} Utilizing a dedicated `.env` file outside the public web-root to safely house database credentials, application keys, and debugging flags.
 \end{itemize}
 
+\section{Folder Structure}
+
+The application's directory structure follows the standard Laravel MVC architectural pattern:
+\begin{verbatim}
+/TopScore
+|-- app/
+|   |-- Http/
+|       |-- Controllers/
+|       |-- Middleware/
+|   |-- Models/
+|-- bootstrap/
+|-- config/
+|-- database/
+|   |-- migrations/
+|   |-- seeders/
+|-- public/
+|   |-- index.php
+|-- resources/
+|   |-- css/
+|   |-- js/
+|   |-- views/
+|       |-- admin/
+|       |-- student/
+|       |-- teacher/
+|-- routes/
+|   |-- web.php
+|-- storage/
+\end{verbatim}
+
 \section{Deployment Process}
 
 The migration from local development to a live environment involves strict chronological steps to verify structural integrity:

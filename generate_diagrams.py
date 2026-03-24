@@ -199,6 +199,115 @@ ui_teacher = """
 
 out_dir = r'e:\topscore\TopScore_FSD_Report'
 
+class_diagram = """
+@startuml
+class User {
+  +id: BigInt
+  +name: String
+  +email: String
+  +password: String
+  +role: String
+}
+
+class Quiz {
+  +id: BigInt
+  +teacher_id: BigInt
+  +title: String
+  +unique_code: String
+  +duration_minutes: Integer
+}
+
+class Question {
+  +id: BigInt
+  +quiz_id: BigInt
+  +question_text: Text
+  +type: String
+  +options: JSON
+  +correct_answer: String
+}
+
+class Result {
+  +id: BigInt
+  +user_id: BigInt
+  +quiz_id: BigInt
+  +score: Integer
+  +total_questions: Integer
+}
+
+class StudentAnswer {
+  +id: BigInt
+  +result_id: BigInt
+  +question_id: BigInt
+  +student_answer: String
+  +is_correct: Boolean
+}
+
+User "1" -- "0..*" Quiz : Creates >
+User "1" -- "0..*" Result : Takes >
+Quiz "1" -- "1..*" Question : Contains >
+Quiz "1" -- "0..*" Result : Has >
+Result "1" -- "1..*" StudentAnswer : Contains >
+Question "1" -- "0..*" StudentAnswer : Relates to >
+@enduml
+"""
+
+er_diagram = """
+@startuml
+entity "users" as users {
+  *id : BigInt <<generated>>
+  --
+  name : Varchar
+  email : Varchar
+  password : Varchar
+  role : Enum
+}
+
+entity "quizzes" as quizzes {
+  *id : BigInt <<generated>>
+  --
+  teacher_id : BigInt <<FK>>
+  title : Varchar
+  unique_code : Varchar
+  duration_minutes : Integer
+}
+
+entity "questions" as questions {
+  *id : BigInt <<generated>>
+  --
+  quiz_id : BigInt <<FK>>
+  question_text : Text
+  type : Enum
+  options : JSON
+  correct_answer : Varchar
+}
+
+entity "results" as results {
+  *id : BigInt <<generated>>
+  --
+  user_id : BigInt <<FK>>
+  quiz_id : BigInt <<FK>>
+  score : Integer
+  total_questions : Integer
+}
+
+entity "student_answers" as student_answers {
+  *id : BigInt <<generated>>
+  --
+  result_id : BigInt <<FK>>
+  question_id : BigInt <<FK>>
+  student_answer : Varchar
+  is_correct : Boolean
+}
+
+users ||..o{ quizzes : "teacher_id"
+users ||..o{ results : "user_id"
+quizzes ||..o{ questions : "quiz_id"
+quizzes ||..o{ results : "quiz_id"
+results ||..|{ student_answers : "result_id"
+questions ||..o{ student_answers : "question_id"
+@enduml
+"""
+
 download_diagram('plantuml', use_case, f'{out_dir}/UseCase_Diagram.png')
 download_diagram('plantuml', activity_teacher, f'{out_dir}/Teacher_Create_Quiz_Activity.png')
 download_diagram('plantuml', activity_student, f'{out_dir}/Student_Take_Quiz_Activity.png')
@@ -206,5 +315,7 @@ download_diagram('plantuml', sequence, f'{out_dir}/Quiz_Submission_Sequence.png'
 download_diagram('plantuml', ui_login, f'{out_dir}/login_interface.png')
 download_diagram('plantuml', ui_student, f'{out_dir}/student_dashboard.png')
 download_diagram('plantuml', ui_teacher, f'{out_dir}/teacher_quiz_creation.png')
+download_diagram('plantuml', class_diagram, f'{out_dir}/Class_Diagram.png')
+download_diagram('plantuml', er_diagram, f'{out_dir}/ER_Diagram.png')
 
 print("All diagrams created successfully.")

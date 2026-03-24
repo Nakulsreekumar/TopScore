@@ -41,6 +41,24 @@ This Activity Diagram represents the process of a Student joining and completing
 
 This sequence diagram illustrates the interaction between the Student, the QuizController, the Question Repository, and the Results Database during a quiz submission. The Student clicks "Submit" (or the timer triggers an auto-submit). The QuizController gathers the array of submitted answers and fetches the accurate 'correct\_answer' values from the Question Repository. It iterates through the student's choices, calculating the accumulated score. Finally, the total score and discrete student\_answers are logged into the Results Database, and a success response and redirect view are sent back to the Student's interface.
 
+\section{Class Diagram}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1\textwidth]{Class_Diagram.png}
+    \caption{Class Diagram}
+    \label{fig:Class_Diagram}
+\end{figure}
+This Class Diagram represents the static structure of the Top Score Quiz System. It highlights the primary classes—such as User, Quiz, Question, and Result—along with their attributes, methods, and the relationships between them, illustrating how data is encapsulated and manipulated within the system's architecture.
+
+\section{Entity-Relationship (ER) Diagram}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1\textwidth,height=0.8\textwidth]{ER_Diagram.png}
+    \caption{Entity-Relationship Diagram}
+    \label{fig:ER_Diagram}
+\end{figure}
+The Entity-Relationship (ER) Diagram models the logical structure of the database. It defines the core entities—Users, Quizzes, Questions, Results, and Student Answers—and the cardinal relationships connecting them. This serves as the foundation for the relational database schema implemented in MySQL.
+
 \section{Project Design}
 
 System design is the process of defining the architecture, components, modules, interfaces, and data flow of a system to meet specified requirements. It ensures that the system is structured, scalable, secure, and user-friendly. Good system design focuses on usability, efficiency, performance, and data security while maintaining clear role-based responsibilities and workflow management. 
@@ -107,6 +125,16 @@ The system uses a synchronous grading algorithm executed entirely on the server 
     \caption{Teacher - Class Performance Metrics}
     \label{fig:Screenshot_4}
 \end{figure}
+
+\subsection{Project Pipeline}
+The project pipeline outlines the systematic flow from initial HTTP request to database transaction and back to the client interface. The standard Laravel architecture handles this through the following steps:
+\begin{enumerate}
+    \item \textbf{Routing:} Incoming HTTP requests are intercepted by \texttt{web.php} and mapped to appropriate Controller methods.
+    \item \textbf{Middleware:} Authentication and role-based checks (e.g., verifying Teacher vs. Student roles) are enforced before execution.
+    \item \textbf{Controller Logic:} The designated Controller processes the request, validates input data, and triggers necessary business logic.
+    \item \textbf{Model \& Database Interaction:} Eloquent ORM Models interact securely with the MySQL database to retrieve or store information dynamically.
+    \item \textbf{View Rendering:} The Controller passes formatted data to Blade templates to construct the frontend HTML presentation logically.
+\end{enumerate}
 
 \subsection{Database Design}
 
