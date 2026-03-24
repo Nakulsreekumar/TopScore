@@ -1,21 +1,36 @@
 \begin{titlepage}
-    \centering
+    % Background Image & Gradient overlay matching the HTML CSS specs
+    \begin{tikzpicture}[remember picture, overlay]
+        % The bottom image container (42% height)
+        \node[anchor=south, inner sep=0, outer sep=0] at (current page.south) {
+            \includegraphics[width=\paperwidth, height=0.42\paperheight]{logo.png}
+        };
+        % The linear gradient overlay (fading from white to transparent over 65% of the 42% container)
+        % 0.42 * 0.65 = 0.273. It fades from 0.42 down to 0.42 - 0.273 = 0.147
+        \fill[white, path fading=south] 
+            ([yshift=0.42\paperheight]current page.south west) rectangle ([yshift=0.147\paperheight]current page.south east);
+        % Tiny buffer to ensure no harsh line at the exact top pixel of the image
+        \fill[white] ([yshift=0.419\paperheight]current page.south west) rectangle ([yshift=0.43\paperheight]current page.south east);
+    \end{tikzpicture}
+
+    \vspace*{0.5cm}
+    \begin{center}
+        {\fontsize{17pt}{22pt}\selectfont\textbf{DEPARTMENT OF COMPUTER SCIENCE\\[0.1cm]RAJAGIRI COLLEGE OF SOCIAL SCIENCES\\[0.1cm](AUTONOMOUS)\\[0.1cm]KALAMASSERY-KOCHI-683104}}\\[1.2cm]
+        
+        \includegraphics[height=3.5cm]{RCSS.png}\\[1.2cm]
+        
+        {\fontsize{16pt}{20pt}\selectfont\textbf{BSc Computer Science (Hons.) Data Analytics}}\\[0.4cm]
+        {\fontsize{15pt}{20pt}\selectfont\textbf{WPL Project Report}}\\[0.8cm]
+        
+        {\fontsize{34pt}{40pt}\selectfont\textbf{Top Score}}\\[0.2cm]
+        {\fontsize{19pt}{24pt}\selectfont\textbf{Quiz System}}\\[1.2cm]
+        
+        \begin{tabular}{l c l}
+            \textbf{\fontsize{14pt}{20pt}\selectfont Name} & \textbf{\fontsize{14pt}{20pt}\selectfont :} & \textbf{\fontsize{14pt}{20pt}\selectfont Nakul Sreekumar} \\[0.2cm]
+            \textbf{\fontsize{14pt}{20pt}\selectfont Semester} & \textbf{\fontsize{14pt}{20pt}\selectfont :} & \textbf{\fontsize{14pt}{20pt}\selectfont 4th Semester} \\[0.2cm]
+            \textbf{\fontsize{14pt}{20pt}\selectfont Register No.} & \textbf{\fontsize{14pt}{20pt}\selectfont :} & \textbf{\fontsize{14pt}{20pt}\selectfont 24118018} \\
+        \end{tabular}
+    \end{center}
     
-
-    \makebox[\textwidth][c]{\fontsize{20pt}{17pt} \selectfont {\textbf{RAJAGIRI COLLEGE OF SOCIAL SCIENCES}}}\\[0.2cm]
-
-    \makebox[\textwidth][c]{\fontsize{15pt}{17pt} \selectfont{ \textbf{(AUTONOMUS)}}}\\[0.2cm]
-
-    {\fontsize{15pt}{17pt} \selectfont \textbf{KALAMASSERY} }\\[1.5cm]
-    
-    \includegraphics[width=6cm]{RCSS.png}\\[1.5 cm]
-    {\textbf{\fontsize{16pt}{17pt} \selectfont {Department of Computer Science}}}\\[0.7cm]
-    \fontsize{15pt}{17pt} \selectfont{ WPL Project Report}\\[0.7cm]
-    \textbf{\fontsize{16pt}{17pt} \selectfont Top Score Quiz System}\\[1.8cm]
-    \textbf{\fontsize{15pt}{17pt} \selectfont Done by}\\[0.4cm]
-    \textbf{\fontsize{15pt}{17pt} \selectfont Nakul Sreekumar}\\[0.4cm]
-    \textbf{\fontsize{15pt}{17pt} \selectfont Reg No: 24118018}\\[2.5cm]
-    {\fontsize{15pt}{17pt} \selectfont Under the guidance of}\\[0.3cm]
-    {\fontsize{15pt}{17pt} \selectfont \textbf{Mr. Ajay Antony Joseph}}\\[1cm] % Ensure this is correct according to your project
-    {\large \textbf{2024-2028}}
+    \vfill
 \end{titlepage}
