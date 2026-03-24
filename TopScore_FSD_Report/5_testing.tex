@@ -1,0 +1,31 @@
+\chapter{SYSTEM TESTING}
+
+Testing is a critical phase in the software development lifecycle used to identify errors, ensure all modules work as expected, and guarantee that the final product meets specified requirements. The Top Score Quiz System underwent rigorous testing to validate role-based access, data security, and evaluation accuracy.
+
+\section{Unit Testing}
+Unit testing involves verifying individual components or functions of the application independently. For the Quiz System, unit tests focused on individual controller methods:
+\begin{itemize}
+    \item \textbf{Question Import Logic:} Verified that CSV parsing functions handle valid rows correctly and discard deliberately malformed rows without crashing the application.
+    \item \textbf{Grading Algorithm:} Evaluated the score calculation method by providing mock submissions where some answers were intentionally wrong, ensuring the calculated score matched the expected outcome.
+    \item \textbf{Timer Enforcement:} Tested backend timestamp validation to ensure users could not intercept the clock and extend their allowed answering time maliciously.
+\end{itemize}
+
+\section{Integration Testing}
+Integration testing evaluates how different modules perform when combined.
+\begin{itemize}
+    \item \textbf{Quiz-to-Questions Linkage:} Evaluated whether creating a Question accurately bound itself to the target Quiz ID and appeared instantly visible to users enrolled via the specific code.
+    \item \textbf{Submission-to-Result Mapping:} Submitted a simulated student response payload and traced the execution from the Controller saving the granular \textit{Student Answers} array to the final generation of the summarized \textit{Result} entry, ensuring foreign key constraints remained intact.
+\end{itemize}
+
+\section{System Testing}
+System testing is executed on the completely integrated application to evaluate its end-to-end functionality.
+\begin{itemize}
+    \item Tested the complete user timeline: A Teacher registers, builds an entire quiz, accesses the code, logs out. A new Student registers, inputs the code, successfully joins, completes the quiz iteratively, and triggers the grading. Evaluated if the system maintained stability during the simulated session.
+\end{itemize}
+
+\section{User Acceptance Testing (UAT)}
+UAT ensures that the software can handle real-world tasks and meets user expectations. In the context of Top Score:
+\begin{itemize}
+    \item Students verified that the UI timer was accurate, questions loaded quickly, and the interface provided a clear pathway to "Submit."
+    \item Teachers verified that their dashboards displayed all active quizzes correctly, importing bulk CSVs was intuitive, and evaluating student reports effectively highlighted problematic academic areas.
+\end{itemize}

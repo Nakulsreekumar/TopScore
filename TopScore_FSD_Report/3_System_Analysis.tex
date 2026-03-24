@@ -1,0 +1,131 @@
+\chapter{SYSTEM ANALYSIS}
+
+\section{Module Description}
+
+The Top Score Quiz System is divided into multiple functional modules, each responsible for managing specific assessment and evaluation operations efficiently. The major modules are described below:
+
+\begin{itemize}
+
+\item \textbf{User Management Module:}
+This module manages registration, authentication, and role-based access control for all users including Admins, Teachers, and Students. It ensures secure login and restricts access to system features based on the designated user roles.
+
+\item \textbf{Quiz Creation and Management Module:}
+This module empowers Teachers to create, edit, and manage quizzes. It involves defining quiz titles, time limits (duration), passing criteria, and generating unique access codes used by students to join the specific quiz session.
+
+\item \textbf{Question Bank Module:}
+This module enables Teachers to construct the content of the quizzes. It supports adding diverse question formats such as Multiple Choice Questions (MCQs) and True/False parameters. It also supports bulk question imports via CSV files for rapid assessment generation.
+
+\item \textbf{Assessment Execution Module:}
+This module allows Students to enter a unique quiz code, join the session, and take the timed test. Built-in timers ensure adherence to the test duration constraints, and progress is tracked throughout the quiz taking process.
+
+\item \textbf{Grading and Results Module:}
+This module automates the evaluation of student submissions. It calculates scores instantly based on predefined correct answers and records the attempt details in the database. Students can review their individual performance, while Teachers can access consolidated performance statistics across all participants.
+
+\end{itemize}
+
+\section{Business Rules}
+
+Business rules define operational constraints to ensure system consistency and reliability.
+
+\textbf{User and Access Rules}
+\begin{itemize}
+\item Every user must register and authenticate before accessing the system.
+\item Role-based access control restricts access; for example, Students cannot modify quizzes.
+\item Only Administrators have the authority to manage overarching system users.
+\end{itemize}
+
+\textbf{Quiz and Assessment Rules}
+\begin{itemize}
+\item A quiz cannot be accessed by a student without the exact unique access code.
+\item Once a time limit expires during an active quiz attempt, the system must automatically submit the current progress.
+\item A student’s final score is calculated immediately upon submission.
+\end{itemize}
+
+\textbf{Question Management Rules}
+\begin{itemize}
+\item Only the Teacher who created the quiz can add or modify its questions.
+\item Each question must explicitly define a correct answer during creation to enable automated grading.
+\item Uploaded CSV files for question imports must follow the predefined structured template.
+\end{itemize}
+
+
+\section{Analysis of Architecture}
+
+The Top Score Quiz System follows the Laravel MVC (Model–View–Controller) architecture to ensure structured and maintainable development.
+
+\begin{enumerate}
+
+\item \textbf{Model Layer:}
+Handles database interactions using the Eloquent ORM. It defines relationships between entities such as User, Quiz, Question, Result, and StudentAnswers. For instance, a Quiz has many Questions, and a User has many Results.
+
+\item \textbf{View Layer:}
+Developed using the Blade templating engine (accompanied by HTML, CSS, and JavaScript) to display role-specific dashboards, interactive quiz-taking interfaces, and dynamic result data.
+
+\item \textbf{Controller Layer:}
+Manages request handling, validation, business logic processing (like timer validation and score calculation), and user redirection (e.g., `QuizController`).
+
+\item \textbf{Database Layer:}
+Uses MySQL for storing structured academic data including users, quizzes, corresponding questions, and recorded student attempts securely.
+
+\item \textbf{Security Features:}
+Implements password hashing, CSRF protection, middleware-based role gating (`role:admin`, `role:teacher`, `role:student`), and database transaction protections for data safety.
+
+\end{enumerate}
+
+\section{Feasibility Analysis}
+
+\subsection{Technical Feasibility}
+
+The system is developed using the robust Laravel framework and MySQL database, which are reliable, scalable, and extensively supported technologies. The application can run on standard web servers (Apache or Nginx) and can be deployed easily in an institutional environment. The standardized development approach guarantees maintainability and future expandability.
+
+\subsection{Economic Feasibility}
+
+The project is highly cost-effective as it heavily utilizes open-source technologies (PHP, Laravel, MySQL). Development and maintenance costs are relatively minimal. The automated grading features significantly reduce manual paperwork and staffing overhead associated with test evaluations.
+
+\subsection{Operational Feasibility}
+
+The system interface is designed to be highly intuitive, aligning with typical e-learning paradigms. Teachers and Students can effortlessly adopt the digital system without extensive training. The compartmentalized modules ensure smooth daily academic operations and swift quiz deployments.
+
+\section{System Environment}
+
+\subsection{Software Environment}
+
+\textbf{Operating System:} Windows 10/11, macOS, or Linux \\
+\textbf{Backend Framework:} Laravel 11.x \\
+\textbf{Programming Language:} PHP 8.2+ \\
+\textbf{Frontend:} Blade Templates, HTML5, CSS3, JavaScript \\
+\textbf{Database:} MySQL 8.0+ \\
+\textbf{Web Server:} Apache / Nginx \\
+\textbf{Development Tools:} VS Code, Composer, Git \\
+
+\subsection{Hardware Environment}
+
+\textbf{Processor:} Intel Core i3 / AMD Ryzen 3 or higher \\
+\textbf{Memory (RAM):} 8 GB minimum (16 GB optimal for development) \\
+\textbf{Storage:} 256 GB SSD \\
+\textbf{Operating System:} Windows 11 \\
+
+\section{Actors and Roles}
+
+\textbf{Administrator}
+\begin{itemize}
+\item Manage and monitor registered users across the platform.
+\item Oversee application stability and manage global settings.
+\item Handle potential user account deletions and moderation.
+\end{itemize}
+
+\textbf{Teacher}
+\begin{itemize}
+\item Construct new quizzes with customizable settings (duration, titles).
+\item Populate quizzes with questions manually or via CSV imports.
+\item Distribute unique quiz access codes to target students.
+\item Monitor ongoing assessments and review comprehensive student results.
+\end{itemize}
+
+\textbf{Student}
+\begin{itemize}
+\item Register and securely sign into the learning platform.
+\item Join specific quizzes using unique access codes provided by Teachers.
+\item Attempt quizzes within the allocated timeframe and submit answers.
+\item View detailed post-quiz performance reports and correct answer keys.
+\end{itemize}

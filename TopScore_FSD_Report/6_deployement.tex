@@ -1,0 +1,27 @@
+\chapter{SYSTEM DEPLOYMENT}
+
+Deployment is the final phase of software development, focusing on delivering a functional application to the production server so users can access it efficiently. Deploying the Top Score Quiz System requires setting up a dedicated server stack capable of executing Laravel-based PHP scripts and preserving MySQL database integrity.
+
+\section{Deployment Prerequisites}
+The host server orchestrates multiple components to ensure smooth application delivery:
+\begin{itemize}
+    \item \textbf{Web Server:} Apache or Nginx optimized to serve PHP traffic and handle concurrent routing requests securely.
+    \item \textbf{Database Server:} A managed MySQL instance specifically tuned to handle extensive relational mapping associated with student assessment logs.
+    \item \textbf{Environment Context:} Utilizing a dedicated `.env` file outside the public web-root to safely house database credentials, application keys, and debugging flags.
+\end{itemize}
+
+\section{Deployment Process}
+
+The migration from local development to a live environment involves strict chronological steps to verify structural integrity:
+\begin{enumerate}
+    \item \textbf{Source Code Finalization:} All project files are consolidated via version control (Git) and pulled securely into the production directory.
+    \item \textbf{Dependency Compilation:} Execution of `composer install --optimize-autoloader --no-dev` to construct the necessary PHP libraries without development overhead. Furthermore, `npm run build` generates the finalized, minified frontend CSS/JS assets (via Vite).
+    \item \textbf{Environment Configuration:} Creating a production-specific `.env` file containing updated API keys and connecting directly to the production database instance while setting `APP_ENV=production` and `APP_DEBUG=false`.
+    \item \textbf{Database Construction:} Running `php artisan migrate --force` to deploy the database schemas to the live environment, followed by `php artisan db:seed` to establish the administrative root accounts.
+    \item \textbf{Optimization Directives:} Leveraging Laravel's caching mechanisms (`php artisan config:cache`, `route:cache`, and `view:cache`) to maximize performance yields and decrease load times drastically.
+\end{enumerate}
+
+\section{Security Considerations during Deployment}
+- Setting stringent directory permissions on the server (e.g., `chmod 755` for directories, ensuring ownership is attributed correctly to the `www-data` group).
+- Ensuring traffic is strictly routed through HTTPS to protect sensitive student answers and authentication tokens.
+- Verifying the application's root directory points strictly to the `/public` folder to prevent unauthorized indexing of sensitive framework operations. 
