@@ -54,3 +54,25 @@ The migration from local development to a live environment involves strict chron
 - Setting stringent directory permissions on the server (e.g., `chmod 755` for directories, ensuring ownership is attributed correctly to the `www-data` group).
 - Ensuring traffic is strictly routed through HTTPS to protect sensitive student answers and authentication tokens.
 - Verifying the application's root directory points strictly to the `/public` folder to prevent unauthorized indexing of sensitive framework operations. 
+
+\section{Version Control Integration (Git)}
+
+Throughout the lifecycle of the Top Score Quiz System, Git was utilized as the primary version control system to manage source code iterations, coordinate deployments, and maintain a robust history of architectural changes. The repository is hosted securely on GitHub.
+
+By leveraging Git, the deployment process is significantly streamlined. Production servers can reliably pull the latest sanitized code directly from the \texttt{main} branch, preventing inconsistencies that arise from manual file transfers.
+
+\begin{figure}[H]
+    \centering
+    \begin{minipage}{0.45\textwidth}
+        \centering
+        \includegraphics[width=\linewidth]{git1.png}
+        \caption{GitHub Repository Overview}
+        \label{fig:git1}
+    \end{minipage}\hfill
+    \begin{minipage}{0.45\textwidth}
+        \centering
+        \includegraphics[width=\linewidth]{git2.png}
+        \caption{Commit History Mapping}
+        \label{fig:git2}
+    \end{minipage}
+\end{figure}
