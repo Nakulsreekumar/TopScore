@@ -170,6 +170,7 @@ class QuizController extends Controller
         fclose($file);
         return back()->with('success', 'Questions imported successfully!');
     }
+
     public function updateQuestion(Request $request, $id) {
         $request->validate([
             'marks' => 'required|integer|min:1'
@@ -215,6 +216,7 @@ class QuizController extends Controller
 
         return view('teacher.quiz_results', compact('quiz', 'results', 'chartData'));
     }
+
     public function updateDuration(Request $request, $id) {
         $request->validate([
             'duration' => 'required|integer|min:1'
@@ -295,19 +297,31 @@ class QuizController extends Controller
     // FIXED: Parameter is now $id to match the route and joinQuiz redirect
     public function takeQuiz($id) 
     {
-        // 1. Fetch the quiz using the ID
+        // --- NEW ANTI-CHEATING CHECK ---
+        // 1. Check if the user has already submitted this quiz
+        $alreadySubmitted = Result::where('quiz_id', $id)
+                            ->where('user_id', Auth::id())
+                            ->exists();
+
+        // 2. If they did, kick them out with an error!
+        if ($alreadySubmitted) {
+            return redirect()->route('student.dashboard')->with('error', 'You have already completed this quiz. You cannot take it again.');
+        }
+        // -------------------------------
+
+        // 3. Fetch the quiz using the ID
         $quiz = Quiz::findOrFail($id);
         
-        // 2. TIMING LOGIC (For the Waiting Room)
+        // 4. TIMING LOGIC (For the Waiting Room)
         $now = now(); 
         $has_started = $now->greaterThanOrEqualTo($quiz->start_time);
         $has_ended = $now->greaterThan($quiz->end_time);
         $is_active = $has_started && !$has_ended;
 
-        // 3. SCRAMBLE QUESTIONS
+        // 5. SCRAMBLE QUESTIONS
         $questions = $quiz->questions()->inRandomOrder()->get();
 
-        // 4. SCRAMBLE OPTIONS
+        // 6. SCRAMBLE OPTIONS
         foreach ($questions as $question) {
             $optionsArray = [];
 
@@ -333,8 +347,13 @@ class QuizController extends Controller
             }
         }
 
-        // Pass everything, including the timer variables, to the view
-        return view('student.take_quiz', compact('quiz', 'questions', 'has_started', 'has_ended', 'is_active'));
+        // --- NEW ANTI-CACHING HEADERS ---
+        // 7. Pass everything to the view AND force the browser not to cache the page
+        return response()->view('student.take_quiz', compact('quiz', 'questions', 'has_started', 'has_ended', 'is_active'))
+            ->header('Cache-Control', 'no-cache, no-store, must-revalidate')
+            ->header('Pragma', 'no-cache')
+            ->header('Expires', '0');
+        // --------------------------------
     }
 
     public function submitQuiz(Request $request, $id) {
